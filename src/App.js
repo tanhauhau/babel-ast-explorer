@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useReducer, useEffect } from 'react';
 import * as babel from './utils/babel';
+import { getQueryParams, useQueryParams } from './utils/url';
 import ASTreeViewer from './components/ASTreeViewer';
 import AceEditor from 'react-ace';
 import 'brace/mode/javascript';
@@ -7,33 +8,45 @@ import 'brace/theme/github';
 import styles from './App.scss';
 import { Checkbox } from 'antd';
 
-const initialBabelState = {
-  jsx: false,
-  flow: false,
-  typescript: false,
-  objectRestSpread: false,
-  pipelineOperator: false,
-  throwExpressions: false,
-  optionalChaining: false,
-  nullishCoalescingOperator: false,
-  exportDefaultFrom: false,
-  dynamicImport: false
-};
+// TODO: should be `useEffect(..., [])` to get query params
+const urlState = getQueryParams();
+
+const initialBabelState = Object.assign(
+  {
+    jsx: false,
+    flow: false,
+    typescript: false,
+    objectRestSpread: false,
+    pipelineOperator: false,
+    throwExpressions: false,
+    optionalChaining: false,
+    nullishCoalescingOperator: false,
+    exportDefaultFrom: false,
+    dynamicImport: false
+  },
+  urlState.babel
+);
 const babelStateReducer = (state, action) => {
   return {
     ...state,
     [action]: !state[action]
   };
 };
+const initialCode = urlState.code || '';
 
 function App() {
   const [babelState, toggleBabelState] = useReducer(
     babelStateReducer,
     initialBabelState
   );
-  const [code, ast, error, onCodeChange] = useBabel('', babelState);
+  const [code, ast, error, onCodeChange] = useBabel(initialCode, babelState);
   const [marker, setMarker] = useMarker();
   const [selectedNode, onCursorChange] = useCursor(ast);
+
+  useQueryParams({
+    babel: babelState,
+    code
+  });
 
   return (
     <div className={styles.App}>
