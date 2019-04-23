@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/static/js/runtime~main.8923bb34.js"
   },
   {
-    "revision": "bdae95da5d318a103292",
-    "url": "/babel-ast-explorer/static/js/main.a23ffbc3.chunk.js"
+    "revision": "21eb86d9f6a98c5e4690",
+    "url": "/babel-ast-explorer/static/js/main.ace114a4.chunk.js"
   },
   {
     "revision": "7ebd6475b189ec628a8c",
     "url": "/babel-ast-explorer/static/js/2.c318b595.chunk.js"
   },
   {
-    "revision": "bdae95da5d318a103292",
+    "revision": "21eb86d9f6a98c5e4690",
     "url": "/babel-ast-explorer/static/css/main.eac55186.chunk.css"
   },
   {
-    "revision": "0fb3eafb5239b8a6ecb66df69cd53683",
+    "revision": "570d591ff742ac1f17f70961404d6e65",
     "url": "/babel-ast-explorer/index.html"
   }
 ];

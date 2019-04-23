@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/babel-ast-explorer/precache-manifest.958dd83d2024785f9e59505f5fe4ddc3.js"
+  "/babel-ast-explorer/precache-manifest.e4f27e3409e62d4585531f1ddac4b718.js"
 );
 
 workbox.clientsClaim();
