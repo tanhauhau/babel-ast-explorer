@@ -144,7 +144,7 @@ function JSONItem({ name, value }) {
     <Highlightable
       highlighted={isSelected}
       onMouseOver={event => {
-        if (value.loc) {
+        if (value && value.loc) {
           event.stopPropagation();
           setMarker(value.loc);
         }

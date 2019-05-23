@@ -1,7 +1,6 @@
 import * as babel from '@babel/core';
 
-export function parse(code, options = {}) {
-  const pluginOptions = Object.keys(options).filter(opts => options[opts]);
+export function parse(code, pluginOptions = []) {
   return babel.parseAsync(code, {
     plugins: [
       function() {

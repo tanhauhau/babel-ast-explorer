@@ -6,36 +6,49 @@ import AceEditor from 'react-ace';
 import 'brace/mode/javascript';
 import 'brace/theme/github';
 import styles from './App.scss';
-import { Checkbox } from 'antd';
+import { Select } from 'antd';
+import 'antd/dist/antd.css';
 
 // TODO: should be `useEffect(..., [])` to get query params
 const urlState = getQueryParams();
 
-const initialBabelState = Object.assign(
-  {
-    jsx: false,
-    flow: false,
-    typescript: false,
-    objectRestSpread: false,
-    pipelineOperator: false,
-    throwExpressions: false,
-    optionalChaining: false,
-    nullishCoalescingOperator: false,
-    exportDefaultFrom: false,
-    dynamicImport: false
-  },
-  urlState.babel
+const initialBabelStateMap = {
+  jsx: false,
+  flow: false,
+  typescript: false,
+  objectRestSpread: false,
+  pipelineOperator: false,
+  throwExpressions: false,
+  optionalChaining: false,
+  optionalCatchBinding: false,
+  nullishCoalescingOperator: false,
+  numericSeparator: false,
+  exportDefaultFrom: false,
+  partialApplication: false,
+  dynamicImport: false,
+  classProperties: false,
+  classPrivateProperties: false,
+  classPrivateMethods: false,
+  doExpressions: false,
+  'decorators-legacy': false,
+  decorators: false,
+};
+if (urlState.babel) {
+  urlState.babel.forEach(key => (initialBabelStateMap[key] = true));
+}
+const options = Object.keys(initialBabelStateMap).map(key => (
+  <Select.Option key={key}>{key}</Select.Option>
+));
+const initialBabelState = Object.keys(initialBabelStateMap).filter(
+  key => initialBabelStateMap[key]
 );
 const babelStateReducer = (state, action) => {
-  return {
-    ...state,
-    [action]: !state[action]
-  };
+  return action;
 };
 const initialCode = urlState.code || '';
 
 function App() {
-  const [babelState, toggleBabelState] = useReducer(
+  const [babelState, updateBabelState] = useReducer(
     babelStateReducer,
     initialBabelState
   );
@@ -45,24 +58,22 @@ function App() {
 
   useQueryParams({
     babel: babelState,
-    code
+    code,
   });
 
   return (
     <div className={styles.App}>
       <div className={styles.codeContainer}>
         <div className={styles.codeToolbar}>
-          {Object.keys(babelState).map(key => {
-            return (
-              <Checkbox
-                key={key}
-                onChange={() => toggleBabelState(key)}
-                checked={babelState[key]}
-              >
-                {toSentenceCase(key)}
-              </Checkbox>
-            );
-          })}
+          <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Please select"
+            defaultValue={initialBabelState}
+            onChange={updateBabelState}
+          >
+            {options}
+          </Select>
         </div>
         <AceEditor
           mode="javascript"
@@ -135,13 +146,6 @@ function useBabel(initialCode, babelOptions) {
 
 export default App;
 
-function toSentenceCase(str) {
-  return str
-    .split(/(?=[A-Z])/)
-    .map(part => part[0].toUpperCase() + part.slice(1).toLowerCase())
-    .join(' ');
-}
-
 function useDebounce(value, delay) {
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
@@ -168,8 +172,8 @@ function useMarker() {
             endRow: end.line - 1,
             endCol: end.column,
             className: 'highlight-marker',
-            type: 'background'
-          }
+            type: 'background',
+          },
         ]);
       } else {
         setMarker([]);
@@ -188,7 +192,7 @@ function useCursor(ast) {
     selection => {
       setCursor([
         selection.selectionLead.row + 1,
-        selection.selectionLead.column
+        selection.selectionLead.column,
       ]);
     },
     [setCursor]
