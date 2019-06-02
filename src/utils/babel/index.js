@@ -6,17 +6,19 @@ export function parse(code, pluginOptions = []) {
       function() {
         return {
           manipulateOptions(opts, parserOpts) {
-            /*
-             add to parserOpts.plugins to enable the syntax
-             eg: 
-              jsx, flow, typescript, objectRestSpread, pipelineOperator, 
-              throwExpressions, optionalChaining, nullishCoalescingOperator, 
-              exportDefaultFrom, dynamicImport, ...
-            */
-            parserOpts.plugins.push(...pluginOptions);
-          }
+            for (const parserOption in pluginOptions) {
+              const option = pluginOptions[parserOption];
+              if (option.enabled) {
+                if (option.options) {
+                  parserOpts.plugins.push([parserOption, option.options]);
+                } else {
+                  parserOpts.plugins.push(parserOption);
+                }
+              }
+            }
+          },
         };
-      }
-    ]
+      },
+    ],
   });
 }

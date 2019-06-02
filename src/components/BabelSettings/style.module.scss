@@ -1,0 +1,22 @@
+.options {
+  margin-left: 24px;
+}
+.drawer {
+  :global {
+    .ant-checkbox-wrapper {
+      display: block;
+
+      + .ant-checkbox-wrapper {
+        margin-left: unset;
+      }
+    }
+  }
+}
+.topbar {
+  display: flex;
+  align-items: center;
+
+  :global(.ant-btn) {
+    margin: 8px;
+  }
+}

@@ -1,63 +1,30 @@
-import React, { useState, useCallback, useReducer, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import * as babel from './utils/babel';
 import { getQueryParams, useQueryParams } from './utils/url';
-import ASTreeViewer from './components/ASTreeViewer';
+import ASTreeViewer, { useTreeSettings } from './components/ASTreeViewer';
+import BabelSettings, { useBabelSettings } from './components/BabelSettings';
 import AceEditor from 'react-ace';
 import 'brace/mode/javascript';
 import 'brace/theme/github';
 import styles from './App.scss';
-import { Select } from 'antd';
 import 'antd/dist/antd.css';
 
 // TODO: should be `useEffect(..., [])` to get query params
 const urlState = getQueryParams();
-
-const initialBabelStateMap = {
-  jsx: false,
-  flow: false,
-  typescript: false,
-  objectRestSpread: false,
-  pipelineOperator: false,
-  throwExpressions: false,
-  optionalChaining: false,
-  optionalCatchBinding: false,
-  nullishCoalescingOperator: false,
-  numericSeparator: false,
-  exportDefaultFrom: false,
-  partialApplication: false,
-  dynamicImport: false,
-  classProperties: false,
-  classPrivateProperties: false,
-  classPrivateMethods: false,
-  doExpressions: false,
-  'decorators-legacy': false,
-  decorators: false,
-};
-if (urlState.babel) {
-  urlState.babel.forEach(key => (initialBabelStateMap[key] = true));
-}
-const options = Object.keys(initialBabelStateMap).map(key => (
-  <Select.Option key={key}>{key}</Select.Option>
-));
-const initialBabelState = Object.keys(initialBabelStateMap).filter(
-  key => initialBabelStateMap[key]
-);
-const babelStateReducer = (state, action) => {
-  return action;
-};
+const initialBabelSettings = urlState.babelSettings || {};
 const initialCode = urlState.code || '';
+const initialTreeSettings = urlState.treeSettings || '';
 
 function App() {
-  const [babelState, updateBabelState] = useReducer(
-    babelStateReducer,
-    initialBabelState
-  );
-  const [code, ast, error, onCodeChange] = useBabel(initialCode, babelState);
+  const [babelSettings, updateBabelSettings] = useBabelSettings(initialBabelSettings);
+  const [treeSettings, toggleTreeSettings] = useTreeSettings(initialTreeSettings);
+  const [code, ast, error, onCodeChange] = useBabel(initialCode, babelSettings);
   const [marker, setMarker] = useMarker();
   const [selectedNode, onCursorChange] = useCursor(ast);
 
   useQueryParams({
-    babel: babelState,
+    babelSettings,
+    treeSettings,
     code,
   });
 
@@ -65,15 +32,10 @@ function App() {
     <div className={styles.App}>
       <div className={styles.codeContainer}>
         <div className={styles.codeToolbar}>
-          <Select
-            mode="multiple"
-            style={{ width: '100%' }}
-            placeholder="Please select"
-            defaultValue={initialBabelState}
-            onChange={updateBabelState}
-          >
-            {options}
-          </Select>
+          <BabelSettings
+            settings={babelSettings}
+            onChangeSettings={updateBabelSettings}
+          />
         </div>
         <AceEditor
           mode="javascript"
@@ -98,20 +60,11 @@ function App() {
             data={ast}
             selectedNode={selectedNode}
             setMarker={setMarker}
+            treeSettings={treeSettings}
+            toggleTreeSettings={toggleTreeSettings}
           />
         )}
       </div>
-      {/* <Drawer
-          title="Settings"
-          placement="left"
-          closable={true}
-          onClose={onClose}
-          visible={this.state.visible}
-        >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-        </Drawer> */}
     </div>
   );
 }
@@ -122,11 +75,12 @@ function useBabel(initialCode, babelOptions) {
   const [ast, setAst] = useState({});
   const onCodeChange = useCallback(value => setValue(value), [setValue]);
   const debouncedValue = useDebounce(value, 500);
+  const debouncedOptions = useDebounce(babelOptions, 500);
 
   useEffect(() => {
     let cancel = false;
     babel
-      .parse(debouncedValue, babelOptions)
+      .parse(debouncedValue, debouncedOptions)
       .then(ast => {
         if (!cancel) {
           setAst(ast);
@@ -139,7 +93,7 @@ function useBabel(initialCode, babelOptions) {
     return () => {
       cancel = true;
     };
-  }, [debouncedValue, babelOptions, setAst, setError]);
+  }, [debouncedValue, debouncedOptions, setAst, setError]);
 
   return [value, ast, error, onCodeChange];
 }

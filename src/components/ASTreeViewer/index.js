@@ -3,7 +3,7 @@ import React, {
   useReducer,
   useContext,
   useEffect,
-  useRef
+  useRef,
 } from 'react';
 import styles from './style.scss';
 import { Checkbox } from 'antd';
@@ -12,33 +12,48 @@ import cx from 'classnames';
 const initialAstState = {
   hideEmpty: false,
   hideLocation: false,
-  hideType: false
+  hideType: false,
 };
 const ASTContext = React.createContext(initialAstState);
 const astStateReducer = (state, action) => {
   return {
     ...state,
-    [action]: !state[action]
+    [action]: !state[action],
   };
 };
 
 const MarkerContext = React.createContext(() => {});
 const SelectedNodeContext = React.createContext([0, 0]);
 
-export default function ASTreeViewer({ data, setMarker, selectedNode }) {
-  const [state, toggle] = useReducer(astStateReducer, initialAstState);
+export default React.memo(ASTreeViewer);
+function ASTreeViewer({
+  data,
+  setMarker,
+  selectedNode,
+  treeSettings,
+  toggleTreeSettings,
+}) {
   return (
-    <ASTContext.Provider value={state}>
+    <ASTContext.Provider value={treeSettings}>
       <MarkerContext.Provider value={setMarker}>
         <SelectedNodeContext.Provider value={selectedNode}>
           <div className={styles.options}>
-            <Checkbox onChange={() => toggle('hideEmpty')}>
+            <Checkbox
+              checked={treeSettings['hideEmpty']}
+              onChange={() => toggleTreeSettings('hideEmpty')}
+            >
               Hide empty keys
             </Checkbox>
-            <Checkbox onChange={() => toggle('hideLocation')}>
+            <Checkbox
+              checked={treeSettings['hideLocation']}
+              onChange={() => toggleTreeSettings('hideLocation')}
+            >
               Hide location data
             </Checkbox>
-            <Checkbox onChange={() => toggle('hideType')}>
+            <Checkbox
+              checked={treeSettings['hideType']}
+              onChange={() => toggleTreeSettings('hideType')}
+            >
               Hide type keys
             </Checkbox>
           </div>
@@ -277,4 +292,20 @@ function useHighlight(highlighted) {
     }
   }, [highlighted]);
   return ref;
+}
+
+function urlParamsStateToInitialState(initialStateFromUrlParams) {
+  return {
+    hideEmpty: !!initialStateFromUrlParams.hideEmpty,
+    hideLocation: !!initialStateFromUrlParams.hideLocation,
+    hideType: !!initialStateFromUrlParams.hideType,
+  };
+}
+
+export function useTreeSettings(initialStateFromUrlParams) {
+  return useReducer(
+    astStateReducer,
+    initialStateFromUrlParams,
+    urlParamsStateToInitialState
+  );
 }

@@ -6,13 +6,13 @@
   .code {
     &Toolbar {
       flex: 0;
-      padding: 8px;
     }
     &Container {
       flex: 1;
       flex-basis: 50%;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
   }
   .ast {
