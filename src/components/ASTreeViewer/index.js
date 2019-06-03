@@ -8,6 +8,7 @@ import React, {
 import styles from './style.scss';
 import { Checkbox } from 'antd';
 import cx from 'classnames';
+import { Tooltip, Typography } from 'antd';
 
 const initialAstState = {
   hideEmpty: false,
@@ -30,6 +31,7 @@ function ASTreeViewer({
   data,
   setMarker,
   selectedNode,
+  selectedNodePath,
   treeSettings,
   toggleTreeSettings,
 }) {
@@ -60,6 +62,13 @@ function ASTreeViewer({
           <div style={{ margin: 4 }}>
             <JSONObject data={data} root={true} />
           </div>
+          {selectedNodePath && (
+            <div className={styles.footer}>
+              {selectedNodePath.map(path => (
+                <FooterItem key={path.type} value={path.type} />
+              ))}
+            </div>
+          )}
         </SelectedNodeContext.Provider>
       </MarkerContext.Provider>
     </ASTContext.Provider>
@@ -120,9 +129,18 @@ function JSONObject({ data, expand, root, onToggleExpand }) {
         <ExpandToggle expand={shouldExpand} toggleExpand={toggleRootExpand} />
       )}
       {data.type && (
-        <span className={styles.nodeType} onClick={toggleExpand}>
-          {data.type}
-        </span>
+        <Tooltip
+          title={
+            <Typography.Text copyable className={styles.tooltipText}>
+              {data.type}
+            </Typography.Text>
+          }
+          trigger="contextMenu"
+        >
+          <span className={styles.nodeType} onClick={toggleExpand}>
+            {data.type}
+          </span>
+        </Tooltip>
       )}
       <span className={cx(styles.openingBracket, styles.bracket)}>{'{'}</span>
 
@@ -292,6 +310,21 @@ function useHighlight(highlighted) {
     }
   }, [highlighted]);
   return ref;
+}
+
+function FooterItem({ value }) {
+  return (
+    <Tooltip
+      title={
+        <Typography.Text copyable className={styles.tooltipText}>
+          {value}
+        </Typography.Text>
+      }
+      trigger="click"
+    >
+      <span className={styles.footerItem}>{value}</span>
+    </Tooltip>
+  );
 }
 
 function urlParamsStateToInitialState(initialStateFromUrlParams) {

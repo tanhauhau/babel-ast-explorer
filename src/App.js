@@ -16,11 +16,15 @@ const initialCode = urlState.code || '';
 const initialTreeSettings = urlState.treeSettings || '';
 
 function App() {
-  const [babelSettings, updateBabelSettings] = useBabelSettings(initialBabelSettings);
-  const [treeSettings, toggleTreeSettings] = useTreeSettings(initialTreeSettings);
+  const [babelSettings, updateBabelSettings] = useBabelSettings(
+    initialBabelSettings
+  );
+  const [treeSettings, toggleTreeSettings] = useTreeSettings(
+    initialTreeSettings
+  );
   const [code, ast, error, onCodeChange] = useBabel(initialCode, babelSettings);
   const [marker, setMarker] = useMarker();
-  const [selectedNode, onCursorChange] = useCursor(ast);
+  const [selectedNode, selectedNodePath, onCursorChange] = useCursor(ast);
 
   useQueryParams({
     babelSettings,
@@ -59,6 +63,7 @@ function App() {
           <ASTreeViewer
             data={ast}
             selectedNode={selectedNode}
+            selectedNodePath={selectedNodePath}
             setMarker={setMarker}
             treeSettings={treeSettings}
             toggleTreeSettings={toggleTreeSettings}
@@ -142,6 +147,7 @@ function useMarker() {
 function useCursor(ast) {
   const [cursor, setCursor] = useState([0, 0]);
   const [selectedAst, setSelectedAst] = useState(null);
+  const [selectedAstPath, setSelectedAstPath] = useState(null);
   const onCursorChange = useCallback(
     selection => {
       setCursor([
@@ -153,10 +159,12 @@ function useCursor(ast) {
   );
 
   useEffect(() => {
-    setSelectedAst(search(cursor, ast));
+    const { node, nodePath } = search(cursor, ast);
+    setSelectedAst(node);
+    setSelectedAstPath(nodePath);
   }, [cursor, ast, setSelectedAst]);
 
-  return [selectedAst, onCursorChange];
+  return [selectedAst, selectedAstPath, onCursorChange];
 }
 
 function isNode(node) {
@@ -174,9 +182,11 @@ function isInRange(cursor, location) {
 }
 
 function search(cursor, ast) {
+  const nodePath = [];
   const stack = [ast];
   while (stack.length) {
     const node = stack.pop();
+    nodePath.push(node);
     for (const key in node) {
       if (isNode(node[key]) && isInRange(cursor, node[key].loc)) {
         stack.push(node[key]);
@@ -190,8 +200,8 @@ function search(cursor, ast) {
       }
     }
     if (stack.length === 0) {
-      return node;
+      return { node, nodePath };
     }
   }
-  return null;
+  return { node: null, nodePath: null };
 }
