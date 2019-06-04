@@ -4,15 +4,12 @@ export const BABEL_CONFIG_MAP = [
   { value: 'typescript' },
   {
     value: 'classProperties',
-    options: [{ key: 'loose', type: 'boolean' }],
   },
   {
     value: 'classPrivateProperties',
-    options: [{ key: 'loose', type: 'boolean' }],
   },
   {
     value: 'classPrivateMethods',
-    options: [{ key: 'loose', type: 'boolean' }],
   },
   {
     value: 'decorators-legacy',
@@ -20,6 +17,7 @@ export const BABEL_CONFIG_MAP = [
   },
   {
     value: 'decorators',
+    options: [{ key: 'decoratorsBeforeExport', type: 'boolean' }],
   },
   {
     value: 'doExpressions',

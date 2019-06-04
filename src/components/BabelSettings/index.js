@@ -48,21 +48,32 @@ function BabelSettings({ settings, onChangeSettings }) {
               {options ? (
                 <div className={styles.options}>
                   {options.map(option => {
+                    const selectedValue =
+                      settings[value] &&
+                      settings[value].options &&
+                      settings[value].options[option.key];
+
                     switch (option.type) {
                       case 'boolean':
                         return (
                           <div key={option.key}>
-                            <Checkbox disabled={!enabled}>
+                            <Checkbox
+                              disabled={!enabled}
+                              checked={selectedValue}
+                              onChange={event =>
+                                onChangeSettings({
+                                  type: 'setOption',
+                                  value,
+                                  option: option.key,
+                                  optionValue: event.target.checked,
+                                })
+                              }
+                            >
                               {option.key}
                             </Checkbox>
                           </div>
                         );
                       case 'enum': {
-                        const selectedValue =
-                          settings[value] &&
-                          settings[value].options &&
-                          settings[value].options[option.key];
-
                         return (
                           <Select
                             key={option.key}
@@ -111,8 +122,16 @@ function babelSettingsReducer(state, action) {
       };
       if (!!options) {
         options.forEach(option => {
-          if (option.type === 'enum') {
-            updatedOption.options[option.key] = option.value[0];
+          switch (option.type) {
+            case 'enum':
+              updatedOption.options[option.key] = option.value[0];
+              break;
+            case 'boolean':
+              updatedOption.options[option.key] = !!updatedOption.options[
+                option.key
+              ];
+              break;
+            default:
           }
         });
       }

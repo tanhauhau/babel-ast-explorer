@@ -65,7 +65,12 @@ function ASTreeViewer({
           {selectedNodePath && (
             <div className={styles.footer}>
               {selectedNodePath.map(path => (
-                <FooterItem key={path.type} value={path.type} />
+                <FooterItem
+                  key={path.type}
+                  value={path.type}
+                  onMouseOver={() => setMarker(path.loc)}
+                  onMouseLeave={() => setMarker(null)}
+                />
               ))}
             </div>
           )}
@@ -312,7 +317,7 @@ function useHighlight(highlighted) {
   return ref;
 }
 
-function FooterItem({ value }) {
+function FooterItem({ value, onMouseOver, onMouseLeave }) {
   return (
     <Tooltip
       title={
@@ -322,7 +327,13 @@ function FooterItem({ value }) {
       }
       trigger="click"
     >
-      <span className={styles.footerItem}>{value}</span>
+      <span
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
+        className={styles.footerItem}
+      >
+        {value}
+      </span>
     </Tooltip>
   );
 }
