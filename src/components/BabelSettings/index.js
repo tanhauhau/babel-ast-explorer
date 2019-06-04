@@ -2,6 +2,7 @@ import React, { useState, useCallback, useReducer } from 'react';
 import { BABEL_CONFIG_MAP, getOptionSettings } from './utils';
 import { Select, Checkbox, Drawer, Button } from 'antd';
 import Tags from './components/Tags';
+import DrawerFooter from './components/DrawerFooter';
 import styles from './style.module.scss';
 
 function BabelSettings({ settings, onChangeSettings }) {
@@ -105,6 +106,7 @@ function BabelSettings({ settings, onChangeSettings }) {
             </React.Fragment>
           );
         })}
+        <DrawerFooter />
       </Drawer>
     </>
   );
