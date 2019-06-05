@@ -59,14 +59,14 @@ function ASTreeViewer({
               Hide type keys
             </Checkbox>
           </div>
-          <div style={{ margin: 4 }}>
+          <div className={styles.treeContainer}>
             <JSONObject data={data} root={true} />
           </div>
           {selectedNodePath && (
             <div className={styles.footer}>
-              {selectedNodePath.map(path => (
+              {selectedNodePath.map((path, i) => (
                 <FooterItem
-                  key={path.type}
+                  key={i}
                   value={path.type}
                   onMouseOver={() => setMarker(path.loc)}
                   onMouseLeave={() => setMarker(null)}

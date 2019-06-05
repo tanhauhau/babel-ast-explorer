@@ -116,4 +116,12 @@ $padding: 8px;
   .tooltipText.tooltipText {
     color: white;
   }
+
+  .tree {
+    &Container {
+      padding: 4px;
+      overflow: scroll;
+      min-height: calc(100vh - 95px);
+    }
+  }
 }
