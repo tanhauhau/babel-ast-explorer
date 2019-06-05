@@ -6,18 +6,20 @@ export function getQueryParams() {
 
 export function useQueryParams(state) {
   useEffect(() => {
-    document.location.hash = toQueryParams(state);
+    window.history.replaceState({}, '', '#' + toQueryParams(state));
   }, Object.values(state));
 }
 
 function parseQueryParams(query) {
   try {
-    return JSON.parse(decodeURIComponent(query.replace('#?', '')));
+    return JSON.parse(
+      decodeURIComponent(escape(window.atob(query.replace('#?', ''))))
+    );
   } catch (e) {
     return {};
   }
 }
 
 function toQueryParams(obj) {
-  return '?' + encodeURIComponent(JSON.stringify(obj));
+  return '?' + window.btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
 }
