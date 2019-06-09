@@ -182,19 +182,23 @@ function isInRange(cursor, location) {
 }
 
 function search(cursor, ast) {
-  const nodePath = [];
   const stack = [ast];
+  const nodePath = [{ node: ast }];
+  let keyPathSoFar = '';
   while (stack.length) {
     const node = stack.pop();
-    nodePath.push(node);
     for (const key in node) {
       if (isNode(node[key]) && isInRange(cursor, node[key].loc)) {
         stack.push(node[key]);
+        keyPathSoFar = keyPathSoFar ? `${keyPathSoFar}.${key}` : key;
+        nodePath.push({ key, keyPath: keyPathSoFar, node: node[key] });
       }
       if (Array.isArray(node[key])) {
         for (const item of node[key]) {
           if (isNode(item) && isInRange(cursor, item.loc)) {
             stack.push(item);
+            keyPathSoFar = keyPathSoFar ? `${keyPathSoFar}.${key}` : key;
+            nodePath.push({ key, keyPath: keyPathSoFar, node: item });
           }
         }
       }

@@ -92,11 +92,17 @@ $padding: 8px;
     &Item {
       padding: 0 8px;
       cursor: pointer;
+      white-space: nowrap;
 
       &:nth-child(n + 2)::before {
         content: '>';
         margin: 0 8px 0 -8px;
         color: rgba(black, 0.25);
+      }
+
+      &Path {
+        color: #7b30d0;
+        font-weight: 500;
       }
     }
   }

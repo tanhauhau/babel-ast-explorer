@@ -67,7 +67,7 @@ function ASTreeViewer({
               {selectedNodePath.map((path, i) => (
                 <FooterItem
                   key={i}
-                  value={path.type}
+                  value={path}
                   onMouseOver={() => setMarker(path.loc)}
                   onMouseLeave={() => setMarker(null)}
                 />
@@ -321,9 +321,18 @@ function FooterItem({ value, onMouseOver, onMouseLeave }) {
   return (
     <Tooltip
       title={
-        <Typography.Text copyable className={styles.tooltipText}>
-          {value}
-        </Typography.Text>
+        <>
+          <Typography.Text copyable className={styles.tooltipText}>
+            {value.node.type}
+          </Typography.Text>
+          {!!value.keyPath && (
+            <div>
+              <Typography.Text copyable className={styles.tooltipText}>
+                {value.keyPath}
+              </Typography.Text>
+            </div>
+          )}
+        </>
       }
       trigger="click"
     >
@@ -332,7 +341,10 @@ function FooterItem({ value, onMouseOver, onMouseLeave }) {
         onMouseLeave={onMouseLeave}
         className={styles.footerItem}
       >
-        {value}
+        <span className={styles.footerItemPath}>
+          {value.key ? `.${value.key}` : ''}
+        </span>
+        {` ${value.node.type}`}
       </span>
     </Tooltip>
   );
