@@ -3,6 +3,9 @@ export const BABEL_CONFIG_MAP = [
   { value: 'flow' },
   { value: 'typescript' },
   {
+    value: 'bigInt',
+  },
+  {
     value: 'classProperties',
   },
   {
