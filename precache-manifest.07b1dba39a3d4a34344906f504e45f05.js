@@ -3,7 +3,7 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/19cfec730794fb674747f0b3d15f8dff.js"
   },
   {
-    "revision": "191591be6288be282b53",
+    "revision": "a5003df9ed06f667d5f6",
     "url": "/babel-ast-explorer/static/css/main.a2c1c57f.chunk.css"
   },
   {
@@ -11,8 +11,8 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/static/js/runtime~main.8923bb34.js"
   },
   {
-    "revision": "191591be6288be282b53",
-    "url": "/babel-ast-explorer/static/js/main.92569c34.chunk.js"
+    "revision": "a5003df9ed06f667d5f6",
+    "url": "/babel-ast-explorer/static/js/main.922b3efd.chunk.js"
   },
   {
     "revision": "b8aacbdb67c1d2386c5c",
@@ -22,7 +22,7 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/dfe08d98fcd353c489ffd73d55cefdb8.js"
   },
   {
-    "revision": "08f95c00a9707f97e0acd231787755c5",
+    "revision": "00534beca0670f941208564c310efef1",
     "url": "/babel-ast-explorer/index.html"
   },
   {
