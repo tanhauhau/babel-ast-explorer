@@ -7,13 +7,15 @@ import AceEditor from 'react-ace';
 import 'brace/mode/javascript';
 import 'brace/theme/github';
 import styles from './App.scss';
+import { Spin } from 'antd';
 import 'antd/dist/antd.css';
 
 // TODO: should be `useEffect(..., [])` to get query params
 const urlState = getQueryParams();
-const initialBabelSettings = urlState.babelSettings || {};
+const initialBabelSettings = urlState.babelSettings || { version: '7.4.5' };
 const initialCode = urlState.code || '';
 const initialTreeSettings = urlState.treeSettings || '';
+const EMPTY_AST = {};
 
 function App() {
   const [babelSettings, updateBabelSettings] = useBabelSettings(
@@ -59,6 +61,8 @@ function App() {
       <div className={styles.astContainer}>
         {error ? (
           <pre>{error.toString()}</pre>
+        ) : ast === EMPTY_AST ? (
+          <Spin />
         ) : (
           <ASTreeViewer
             data={ast}
@@ -77,15 +81,17 @@ function App() {
 function useBabel(initialCode, babelOptions) {
   const [value, setValue] = useState(initialCode);
   const [error, setError] = useState(null);
-  const [ast, setAst] = useState({});
+  const [ast, setAst] = useState(EMPTY_AST);
   const onCodeChange = useCallback(value => setValue(value), [setValue]);
   const debouncedValue = useDebounce(value, 500);
   const debouncedOptions = useDebounce(babelOptions, 500);
 
   useEffect(() => {
     let cancel = false;
+    setAst(EMPTY_AST);
+
     babel
-      .parse(debouncedValue, debouncedOptions)
+      .parse(debouncedValue, debouncedOptions, debouncedOptions.version)
       .then(ast => {
         if (!cancel) {
           setAst(ast);

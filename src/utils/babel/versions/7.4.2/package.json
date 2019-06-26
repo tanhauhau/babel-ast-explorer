@@ -1,0 +1,7 @@
+{
+  "name": "babel-7.4.2",
+  "private": true,
+  "dependencies": {
+    "@babel/standalone": "7.4.2"
+  }
+}
