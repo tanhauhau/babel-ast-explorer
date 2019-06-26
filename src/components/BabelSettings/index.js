@@ -51,7 +51,7 @@ function BabelSettings({ settings, onChangeSettings }) {
         width={400}
         className={styles.drawer}
       >
-        <Select
+        Babel version <Select
           value={settings.version}
           onChange={version =>
             onChangeSettings({ type: 'setVersion', version })
