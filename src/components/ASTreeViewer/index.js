@@ -9,6 +9,7 @@ import styles from './style.scss';
 import { Checkbox } from 'antd';
 import cx from 'classnames';
 import { Tooltip, Typography } from 'antd';
+import { generateBabelTypeCode } from './utils';
 
 const initialAstState = {
   hideEmpty: false,
@@ -128,6 +129,12 @@ function JSONObject({ data, expand, root, onToggleExpand }) {
 
   const astState = useContext(ASTContext);
 
+  const copyable = {
+    get text() {
+      return generateBabelTypeCode(data);
+    },
+  };
+
   return (
     <>
       {root && (
@@ -136,9 +143,18 @@ function JSONObject({ data, expand, root, onToggleExpand }) {
       {data.type && (
         <Tooltip
           title={
-            <Typography.Text copyable className={styles.tooltipText}>
-              {data.type}
-            </Typography.Text>
+            <>
+              <Typography.Text copyable className={styles.tooltipText}>
+                {data.type}
+              </Typography.Text>
+              <br />
+              <Typography.Text
+                copyable={copyable}
+                className={styles.tooltipText}
+              >
+                @babel/types
+              </Typography.Text>
+            </>
           }
           trigger="contextMenu"
         >
@@ -352,9 +368,9 @@ function FooterItem({ value, onMouseOver, onMouseLeave }) {
 
 function urlParamsStateToInitialState(initialStateFromUrlParams) {
   return {
-    hideEmpty: !!initialStateFromUrlParams.hideEmpty,
-    hideLocation: !!initialStateFromUrlParams.hideLocation,
-    hideType: !!initialStateFromUrlParams.hideType,
+    hideEmpty: initialStateFromUrlParams.hideEmpty !== false,
+    hideLocation: initialStateFromUrlParams.hideLocation !== false,
+    hideType: initialStateFromUrlParams.hideType !== false,
   };
 }
 
