@@ -62,6 +62,7 @@
   },
   "homepage": "https://lihautan.com/babel-ast-explorer",
   "scripts": {
+    "postinstall": "node scripts/install-babel-standalone.js",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "deploy": "node ./scripts/publish.js",
