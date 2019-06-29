@@ -9,7 +9,7 @@ import styles from './style.scss';
 import { Checkbox } from 'antd';
 import cx from 'classnames';
 import { Tooltip, Typography } from 'antd';
-import { generateBabelTypeCode } from './utils';
+import { generateBabelTypeCode } from '../../utils/babel';
 
 const initialAstState = {
   hideEmpty: false,
