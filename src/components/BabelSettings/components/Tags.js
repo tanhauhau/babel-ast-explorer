@@ -10,7 +10,9 @@ function Tags({ settings, onClick }) {
   return (
     <span className={styles.container}>
       {enabledSettings.map(setting => (
-        <Tag onClick={onClick}>{setting}</Tag>
+        <Tag key={setting} onClick={onClick}>
+          {setting}
+        </Tag>
       ))}
     </span>
   );
