@@ -12,7 +12,7 @@ import 'antd/dist/antd.css';
 
 // TODO: should be `useEffect(..., [])` to get query params
 const urlState = getQueryParams();
-const initialBabelSettings = urlState.babelSettings || { version: '7.4.5' };
+const initialBabelSettings = urlState.babelSettings || { version: '7.5.5' };
 const initialCode = urlState.code || '';
 const initialTreeSettings = urlState.treeSettings || '';
 const EMPTY_AST = {};

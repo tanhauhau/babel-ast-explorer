@@ -24,6 +24,12 @@ const BABEL_VERSIONS = [
   '7.4.3',
   '7.4.4',
   '7.4.5',
+  '7.5.0',
+  '7.5.1',
+  '7.5.2',
+  '7.5.3',
+  '7.5.4',
+  '7.5.5',
 ];
 
 function BabelSettings({ settings, onChangeSettings }) {

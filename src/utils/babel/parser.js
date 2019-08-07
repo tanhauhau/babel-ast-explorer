@@ -1,6 +1,6 @@
 /* eslint-disable import/no-webpack-loader-syntax, no-new-func */
 
-export function parse(code, pluginOptions = [], version = '7.4.5') {
+export function parse(code, pluginOptions = [], version = '7.5.5') {
   return getBabel(version).then(
     babel =>
       babel.transform(code, {
