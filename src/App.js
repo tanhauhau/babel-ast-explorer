@@ -12,7 +12,12 @@ import 'antd/dist/antd.css';
 
 // TODO: should be `useEffect(..., [])` to get query params
 const urlState = getQueryParams();
-const initialBabelSettings = urlState.babelSettings || { version: '7.4.5' };
+const initialBabelSettings = urlState.babelSettings || { version: '7.6.0' };
+// NOTE: cleanup
+if (initialBabelSettings.customParser) {
+  delete initialBabelSettings.customParser;
+}
+
 const initialCode = urlState.code || '';
 const initialTreeSettings = urlState.treeSettings || '';
 const EMPTY_AST = {};
@@ -21,6 +26,7 @@ function App() {
   const [babelSettings, updateBabelSettings] = useBabelSettings(
     initialBabelSettings
   );
+  console.log(babelSettings);
   const [treeSettings, toggleTreeSettings] = useTreeSettings(
     initialTreeSettings
   );
@@ -91,7 +97,11 @@ function useBabel(initialCode, babelOptions) {
     setAst(EMPTY_AST);
 
     babel
-      .parse(debouncedValue, debouncedOptions, debouncedOptions.version)
+      .parse(debouncedValue, {
+        pluginOptions: debouncedOptions,
+        customParser: debouncedOptions.customParser,
+        version: debouncedOptions.version,
+      })
       .then(ast => {
         if (!cancel) {
           setAst(ast);

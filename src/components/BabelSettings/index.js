@@ -1,10 +1,11 @@
 import React, { useState, useCallback, useReducer } from 'react';
 import { BABEL_CONFIG_MAP, getOptionSettings } from './utils';
-import { Select, Checkbox, Drawer, Button } from 'antd';
+import { Select, Checkbox, Drawer, Button, Upload, Icon } from 'antd';
 import Tags from './components/Tags';
 import DrawerFooter from './components/DrawerFooter';
 import styles from './style.module.scss';
 import { babelVersions as BABEL_VERSIONS } from '../../utils/babel';
+import { getExportsFromFile } from '../../utils/file';
 
 function BabelSettings({ settings, onChangeSettings }) {
   const [opened, setOpened] = useState(false);
@@ -31,19 +32,56 @@ function BabelSettings({ settings, onChangeSettings }) {
         width={400}
         className={styles.drawer}
       >
-        Babel version{' '}
-        <Select
-          value={settings.version}
-          onChange={version =>
-            onChangeSettings({ type: 'setVersion', version })
-          }
-        >
-          {BABEL_VERSIONS.map(value => (
-            <Select.Option value={value} key={value}>
-              {value}
-            </Select.Option>
-          ))}
-        </Select>
+        {settings.customParser ? (
+          <Button
+            type="danger"
+            onClick={() =>
+              onChangeSettings({
+                type: 'removeCustomParser',
+              })
+            }
+          >
+            <Icon type="delete" theme="filled" />
+            {'Custom parser: ' + settings.customParser.name}
+          </Button>
+        ) : (
+          <>
+            {'Babel version '}
+            <Select
+              value={settings.version}
+              onChange={version =>
+                onChangeSettings({ type: 'setVersion', version })
+              }
+            >
+              {BABEL_VERSIONS.map(value => (
+                <Select.Option value={value} key={value}>
+                  {value}
+                </Select.Option>
+              ))}
+            </Select>
+            <Upload
+              style={{ marginLeft: 8 }}
+              name="file"
+              headers={{
+                authorization: 'authorization-text',
+              }}
+              showUploadList={false}
+              beforeUpload={file => {
+                getExportsFromFile(file).then(parser => {
+                  onChangeSettings({
+                    type: 'setCustomParser',
+                    customParser: parser,
+                  });
+                });
+                return false;
+              }}
+            >
+              <Button>
+                <Icon type="upload" /> Custom parser
+              </Button>
+            </Upload>
+          </>
+        )}
         {BABEL_CONFIG_MAP.map(({ value, options }) => {
           const enabled = settings[value] && settings[value].enabled;
           return (
@@ -179,6 +217,16 @@ function babelSettingsReducer(state, action) {
       return {
         ...state,
         version: action.version,
+      };
+    case 'setCustomParser':
+      return {
+        ...state,
+        customParser: action.customParser,
+      };
+    case 'removeCustomParser':
+      return {
+        ...state,
+        customParser: undefined,
       };
     default:
       return state;

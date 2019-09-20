@@ -4,7 +4,7 @@ import styles from './Tags.module.scss';
 
 function Tags({ settings, onClick }) {
   const enabledSettings = Object.keys(settings).filter(
-    setting => settings[setting].enabled
+    setting => settings[setting] && settings[setting].enabled
   );
 
   return (

@@ -1,6 +1,17 @@
 /* eslint-disable import/no-webpack-loader-syntax, no-new-func */
 
-export function parse(code, pluginOptions = [], version = '7.4.5') {
+export function parse(
+  code,
+  { customParser, pluginOptions = [], version = '7.4.5' }
+) {
+  if (customParser && typeof customParser.parse === 'function') {
+    return Promise.resolve(
+      customParser.parse(code, {
+        plugins: pushToPlugins([], pluginOptions),
+      })
+    );
+  }
+
   return getBabel(version).then(
     babel =>
       babel.transform(code, {
@@ -9,22 +20,27 @@ export function parse(code, pluginOptions = [], version = '7.4.5') {
           function() {
             return {
               manipulateOptions(opts, parserOpts) {
-                for (const parserOption in pluginOptions) {
-                  const option = pluginOptions[parserOption];
-                  if (option.enabled) {
-                    if (option.options) {
-                      parserOpts.plugins.push([parserOption, option.options]);
-                    } else {
-                      parserOpts.plugins.push(parserOption);
-                    }
-                  }
-                }
+                pushToPlugins(parserOpts.plugins, pluginOptions);
               },
             };
           },
         ],
       }).ast
   );
+}
+
+function pushToPlugins(plugins, pluginOptions) {
+  for (const parserOption in pluginOptions) {
+    const option = pluginOptions[parserOption];
+    if (option && option.enabled) {
+      if (option.options) {
+        plugins.push([parserOption, option.options]);
+      } else {
+        plugins.push(parserOption);
+      }
+    }
+  }
+  return plugins;
 }
 
 const babel = {};
