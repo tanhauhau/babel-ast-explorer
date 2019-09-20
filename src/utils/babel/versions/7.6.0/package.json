@@ -1,0 +1,8 @@
+{
+  "name": "babel-7.6.0",
+  "private": true,
+  "main": "index.js",
+  "dependencies": {
+    "@babel/standalone": "7.6.0"
+  }
+}

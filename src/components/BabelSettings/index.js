@@ -4,27 +4,7 @@ import { Select, Checkbox, Drawer, Button } from 'antd';
 import Tags from './components/Tags';
 import DrawerFooter from './components/DrawerFooter';
 import styles from './style.module.scss';
-
-const BABEL_VERSIONS = [
-  '7.0.0',
-  '7.1.0',
-  '7.2.0',
-  '7.2.2',
-  '7.2.3',
-  '7.2.4',
-  '7.2.5',
-  '7.3.0',
-  '7.3.1',
-  '7.3.2',
-  '7.3.3',
-  '7.3.4',
-  '7.4.0',
-  '7.4.1',
-  '7.4.2',
-  '7.4.3',
-  '7.4.4',
-  '7.4.5',
-];
+import { babelVersions as BABEL_VERSIONS } from '../../utils/babel';
 
 function BabelSettings({ settings, onChangeSettings }) {
   const [opened, setOpened] = useState(false);
@@ -51,7 +31,8 @@ function BabelSettings({ settings, onChangeSettings }) {
         width={400}
         className={styles.drawer}
       >
-        Babel version <Select
+        Babel version{' '}
+        <Select
           value={settings.version}
           onChange={version =>
             onChangeSettings({ type: 'setVersion', version })
