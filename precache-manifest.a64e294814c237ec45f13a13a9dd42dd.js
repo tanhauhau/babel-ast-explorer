@@ -3,7 +3,7 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/233e65e8cd5096fbb01aad0877452759.js"
   },
   {
-    "revision": "a819a907e3c3fa91aa99",
+    "revision": "7309a35f084c14c6281b",
     "url": "/babel-ast-explorer/static/css/main.47e81315.chunk.css"
   },
   {
@@ -11,22 +11,22 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/static/js/runtime~main.8923bb34.js"
   },
   {
-    "revision": "a819a907e3c3fa91aa99",
-    "url": "/babel-ast-explorer/static/js/main.10b1ead1.chunk.js"
+    "revision": "7309a35f084c14c6281b",
+    "url": "/babel-ast-explorer/static/js/main.653d70e5.chunk.js"
   },
   {
-    "revision": "406c65837523689bd386",
-    "url": "/babel-ast-explorer/static/js/2.7768cd86.chunk.js"
+    "revision": "673f17e91221633961b3",
+    "url": "/babel-ast-explorer/static/js/2.378a5094.chunk.js"
   },
   {
     "url": "/babel-ast-explorer/a83d57fb4555c9c7c0c2e557718113ac.js"
   },
   {
-    "revision": "765af30633dda508f0d0b0d0f9f927aa",
+    "revision": "3cb825f2b360af7fae8189caaf6044e0",
     "url": "/babel-ast-explorer/index.html"
   },
   {
-    "revision": "406c65837523689bd386",
+    "revision": "673f17e91221633961b3",
     "url": "/babel-ast-explorer/static/css/2.487dca0a.chunk.css"
   },
   {
