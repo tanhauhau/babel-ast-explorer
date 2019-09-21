@@ -1,7 +1,7 @@
 {
   "main.css": "/babel-ast-explorer/static/css/main.47e81315.chunk.css",
-  "main.js": "/babel-ast-explorer/static/js/main.94049133.chunk.js",
-  "main.js.map": "/babel-ast-explorer/static/js/main.94049133.chunk.js.map",
+  "main.js": "/babel-ast-explorer/static/js/main.5ace59ec.chunk.js",
+  "main.js.map": "/babel-ast-explorer/static/js/main.5ace59ec.chunk.js.map",
   "runtime~main.js": "/babel-ast-explorer/static/js/runtime~main.5b6001ae.js",
   "runtime~main.js.map": "/babel-ast-explorer/static/js/runtime~main.5b6001ae.js.map",
   "static/css/2.487dca0a.chunk.css": "/babel-ast-explorer/static/css/2.487dca0a.chunk.css",
@@ -12,7 +12,7 @@
   "babel.min.js": "/babel-ast-explorer/f3fbcd68d6010f4bb60c62494f15db7f.js",
   "babel.js": "/babel-ast-explorer/fc7ab9582f27c7eec66d788675a6992b.js",
   "index.html": "/babel-ast-explorer/index.html",
-  "precache-manifest.659210fa507e0ad6d7b49d0406c716db.js": "/babel-ast-explorer/precache-manifest.659210fa507e0ad6d7b49d0406c716db.js",
+  "precache-manifest.e4f8d2a88921c11911e6f5c43195da8d.js": "/babel-ast-explorer/precache-manifest.e4f8d2a88921c11911e6f5c43195da8d.js",
   "service-worker.js": "/babel-ast-explorer/service-worker.js",
   "static/css/2.487dca0a.chunk.css.map": "/babel-ast-explorer/static/css/2.487dca0a.chunk.css.map",
   "static/css/main.47e81315.chunk.css.map": "/babel-ast-explorer/static/css/main.47e81315.chunk.css.map"
