@@ -15,6 +15,7 @@ const initialAstState = {
   hideEmpty: false,
   hideLocation: false,
   hideType: false,
+  hideComments: false,
 };
 const ASTContext = React.createContext(initialAstState);
 const astStateReducer = (state, action) => {
@@ -58,6 +59,12 @@ function ASTreeViewer({
               onChange={() => toggleTreeSettings('hideType')}
             >
               Hide type keys
+            </Checkbox>
+            <Checkbox
+              checked={treeSettings['hideComments']}
+              onChange={() => toggleTreeSettings('hideComments')}
+            >
+              Hide comments
             </Checkbox>
           </div>
           <div className={styles.treeContainer}>
@@ -105,6 +112,8 @@ function getComponent(data) {
       return JSONString;
     case 'boolean':
       return JSONBoolean;
+    case 'undefined':
+      return JSONUndefined;
     default:
       return JSONUnknown;
   }
@@ -170,6 +179,13 @@ function JSONObject({ data, expand, root, onToggleExpand }) {
       <div className={cx(styles.child, !shouldExpand && styles.hidden)}>
         {keys.map(key =>
           (astState.hideLocation && ['loc', 'start', 'end'].includes(key)) ||
+          (astState.hideComments &&
+            [
+              'innerComments',
+              'leadingComments',
+              'trailingComments',
+              'comments',
+            ].includes(key)) ||
           (astState.hideEmpty && data[key] === null) ||
           (astState.hideType && key === 'type') ? null : (
             <JSONItem key={key} name={key} value={data[key]} />
@@ -293,6 +309,10 @@ function JSONNull() {
   return <span className={styles.null}>null</span>;
 }
 
+function JSONUndefined() {
+  return <span className={styles.null}>undefined</span>;
+}
+
 function JSONBoolean({ data }) {
   return <span className={styles.boolean}>{JSON.stringify(data)}</span>;
 }
@@ -371,6 +391,7 @@ function urlParamsStateToInitialState(initialStateFromUrlParams) {
     hideEmpty: initialStateFromUrlParams.hideEmpty !== false,
     hideLocation: initialStateFromUrlParams.hideLocation !== false,
     hideType: initialStateFromUrlParams.hideType !== false,
+    hideComments: initialStateFromUrlParams.hideComments !== false,
   };
 }
 
