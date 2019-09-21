@@ -1,32 +1,36 @@
 self.__precacheManifest = [
   {
-    "url": "/babel-ast-explorer/233e65e8cd5096fbb01aad0877452759.js"
+    "url": "/babel-ast-explorer/dfe08d98fcd353c489ffd73d55cefdb8.js"
   },
   {
-    "revision": "7309a35f084c14c6281b",
+    "revision": "6ca165024b161f6bd115",
     "url": "/babel-ast-explorer/static/css/main.47e81315.chunk.css"
   },
   {
-    "revision": "b708baf5b1ac0d7fd014",
-    "url": "/babel-ast-explorer/static/js/runtime~main.8923bb34.js"
+    "revision": "7d20f856800f3d8a87c8",
+    "url": "/babel-ast-explorer/static/js/runtime~main.5b6001ae.js"
   },
   {
-    "revision": "7309a35f084c14c6281b",
-    "url": "/babel-ast-explorer/static/js/main.653d70e5.chunk.js"
+    "revision": "6ca165024b161f6bd115",
+    "url": "/babel-ast-explorer/static/js/main.94049133.chunk.js"
   },
   {
-    "revision": "673f17e91221633961b3",
-    "url": "/babel-ast-explorer/static/js/2.378a5094.chunk.js"
+    "revision": "7d50dc12efcc9460dfe2",
+    "url": "/babel-ast-explorer/static/js/2.0ac9da73.chunk.js"
+  },
+  {
+    "revision": "fc41fb969f956e4a87c6",
+    "url": "/babel-ast-explorer/static/js/3.b90d12e6.chunk.js"
   },
   {
     "url": "/babel-ast-explorer/a83d57fb4555c9c7c0c2e557718113ac.js"
   },
   {
-    "revision": "3cb825f2b360af7fae8189caaf6044e0",
+    "revision": "df211a464ee70f77552860a14b3ad7f7",
     "url": "/babel-ast-explorer/index.html"
   },
   {
-    "revision": "673f17e91221633961b3",
+    "revision": "7d50dc12efcc9460dfe2",
     "url": "/babel-ast-explorer/static/css/2.487dca0a.chunk.css"
   },
   {
@@ -48,10 +52,10 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/417c8566cc4d9ce65bb8e0b02545bd32.js"
   },
   {
-    "url": "/babel-ast-explorer/dfe08d98fcd353c489ffd73d55cefdb8.js"
+    "url": "/babel-ast-explorer/531fbc79d8c2b3a0bf9dca28b165c782.js"
   },
   {
-    "url": "/babel-ast-explorer/531fbc79d8c2b3a0bf9dca28b165c782.js"
+    "url": "/babel-ast-explorer/5811d592c11e735c1ff7960b046542de.js"
   },
   {
     "url": "/babel-ast-explorer/cc1e5d4cc12c255937780a539dbe4179.js"
@@ -66,16 +70,16 @@ self.__precacheManifest = [
     "url": "/babel-ast-explorer/c0144416cd8da3585907a43ab95b2971.js"
   },
   {
-    "url": "/babel-ast-explorer/5811d592c11e735c1ff7960b046542de.js"
+    "url": "/babel-ast-explorer/adc8df105c02999d648fa34a6738a5ed.js"
   },
   {
-    "url": "/babel-ast-explorer/adc8df105c02999d648fa34a6738a5ed.js"
+    "url": "/babel-ast-explorer/f3fbcd68d6010f4bb60c62494f15db7f.js"
   },
   {
     "url": "/babel-ast-explorer/f231a5c697c4c2a7b0ac7125a40496c9.js"
   },
   {
-    "url": "/babel-ast-explorer/f3fbcd68d6010f4bb60c62494f15db7f.js"
+    "url": "/babel-ast-explorer/233e65e8cd5096fbb01aad0877452759.js"
   },
   {
     "url": "/babel-ast-explorer/1e6d2483a91b47c9f5b13da717775034.js"
