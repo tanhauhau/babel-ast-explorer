@@ -26,7 +26,6 @@ function App() {
   const [babelSettings, updateBabelSettings] = useBabelSettings(
     initialBabelSettings
   );
-  console.log(babelSettings);
   const [treeSettings, toggleTreeSettings] = useTreeSettings(
     initialTreeSettings
   );
