@@ -9,6 +9,7 @@ import 'brace/theme/github';
 import styles from './App.scss';
 import { Spin } from 'antd';
 import 'antd/dist/antd.css';
+import DownloadButton from './components/DownloadButton';
 
 // TODO: should be `useEffect(..., [])` to get query params
 const urlState = getQueryParams();
@@ -47,6 +48,7 @@ function App() {
             settings={babelSettings}
             onChangeSettings={updateBabelSettings}
           />
+          <DownloadButton ast={ast} />
         </div>
         <AceEditor
           mode="javascript"

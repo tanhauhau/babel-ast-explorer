@@ -6,6 +6,10 @@
   .code {
     &Toolbar {
       flex: 0;
+      display: flex;
+      flex-basis: auto;
+      align-items: center;
+      background: #eaeaea;
     }
     &Container {
       flex: 1;
