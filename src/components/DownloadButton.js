@@ -3,7 +3,7 @@ import { Button } from 'antd';
 
 const META_TYPE = 'text/json';
 
-function ExportButton({ ast }) {
+function generateHref(ast) {
   const data = JSON.stringify(ast, null, 2);
   let href;
   if (Blob) {
@@ -16,11 +16,20 @@ function ExportButton({ ast }) {
   } else {
     href = `data:${META_TYPE};charset=utf-8,${encodeURIComponent(data)}`;
   }
+  return href;
+}
+
+function simulateLink(href) {
+  const link = document.createElement('a');
+  link.href = href;
+  link.download = 'data.json';
+  link.click();
+}
+
+export default function DownloadButton({ ast }) {
+  const onClick = React.useCallback(() => simulateLink(generateHref(ast)), [ast])
 
   return (
-    <a href={href} download="data.json">
-      <Button>Download AST</Button>
-    </a>
+    <Button onClick={onClick}>Download AST</Button>
   );
 }
-export default React.memo(ExportButton);
